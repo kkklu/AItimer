@@ -22,6 +22,7 @@ from PySide2.QtWidgets import QApplication,QWidget,QPlainTextEdit,QLabel,QLCDNum
 import time,datetime
 import threading
 #import pandas as pd
+from PySide2.QtCore import qDebug
 
 try:
     import xml.etree.cElementTree as ET
@@ -129,6 +130,7 @@ class MyWidget(QWidget):
     #功能：每隔一段时间读xml文件，并更新变量
     #1、方法1：需要做一个static的变量（list或字典）吗？然后不断地都xml，更新该变量
     #2、方法2 返回一个变量值
+    #3、方法3：考虑用signal
     def ReadXml(self):
         while True:
             #init xml
@@ -147,6 +149,7 @@ class MyWidget(QWidget):
                 tree = ET.parse('config.xml')
                 #获取根元素
                 root=tree.getroot()
+                qDebug("打开config.xml成功")
             except IOError:
                 print("打不开xml文件")
                 return False
@@ -159,7 +162,7 @@ class MyWidget(QWidget):
 
             #df = pd.DataFrame(data, columns=['start_date', 'end_date', 'time','message'])
             #print(df)
-            time.sleep(1000)
+            time.sleep(3) #重新3秒读一次xml文件
             return True
 
     def initTime(self):

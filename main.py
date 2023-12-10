@@ -21,6 +21,7 @@ from PySide2.QtWidgets import QApplication,QWidget,QPlainTextEdit,QLabel,QLCDNum
 #from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel,QLCDNumber,QVBoxLayout,QMessageBox,QPushButton
 import time,datetime
 import threading
+#import pandas as pd
 
 try:
     import xml.etree.cElementTree as ET
@@ -41,6 +42,10 @@ class MyWidget(QWidget):
         time_display=threading.Thread(target=self.display,name="time_display")
         time_display.start()
 
+        ReadXml=threading.Thread(target=self.ReadXml,name="read_xml")
+        ReadXml.start()
+        #if self.ReadXml():
+        #    print("read xml success")
 
     #def readxml():
 
@@ -129,29 +134,33 @@ class MyWidget(QWidget):
             #init xml
             #read xml
             # 读取xml字符串
-            try:
-                xml_data=open("config.xml").read()
-            except IOError:
-                print("Error:找不到文件打开！")
-            else:
-                root = ET.fromstring(xml_data)
+            
+            #try:
+            #    xml_data=open("config.xml").read()
+            #except IOError:
+            #    print("Error:找不到文件打开！")
+            #else:
+            #    root = ET.fromstring(xml_data)
 
                 # 打开XML文件并解析 第二种打开xml方式
-                #tree = ET.parse('config.xml')
-
-            #获取根元素
-            root=tree.getroot()
+            try:
+                tree = ET.parse('config.xml')
+                #获取根元素
+                root=tree.getroot()
+            except IOError:
+                print("打不开xml文件")
+                return False
             data = list()
             for child in root:
                 data1 = list()
                 for son in child:
                     data1.append(son.text)
                 data.append(data1)
-    ​
-            df = pd.DataFrame(data, columns=['start_date', 'end_date', 'time','message'])
-            print(df)
-            time.sleep(1)
-            #return
+
+            #df = pd.DataFrame(data, columns=['start_date', 'end_date', 'time','message'])
+            #print(df)
+            time.sleep(1000)
+            return True
 
     def initTime(self):
         mytime=datetime

@@ -162,7 +162,11 @@ class MyWidget(QWidget):
                     qDebug(data1)
                 data.append(data1,end='\n')
                 qDebug("DATA:")
-                qDebug(data,end='\n')    
+                qDebug(data,end='\n')
+            #for combobox_item in data:
+            #    #整理好字符串并添加字符串：
+            #
+            #    self.h1_combobox.addItem(combobox_item)   
 
             #df = pd.DataFrame(data, columns=['start_date', 'end_date', 'time','message'])
             #print(df)

@@ -158,7 +158,11 @@ class MyWidget(QWidget):
                 data1 = list()
                 for son in child:
                     data1.append(son.text)
-                data.append(data1)
+                    qDebug("DATA1:")
+                    qDebug(data1)
+                data.append(data1,end='\n')
+                qDebug("DATA:")
+                qDebug(data,end='\n')    
 
             #df = pd.DataFrame(data, columns=['start_date', 'end_date', 'time','message'])
             #print(df)

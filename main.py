@@ -121,6 +121,7 @@ class MyWidget(QWidget):
     def display(self):
         while True:
             self.LCD.display(time.strftime('%X',time.localtime()))
+            qDebug(time.strftime('%X',time.localtime()))
             time.sleep(1)
         #return
     

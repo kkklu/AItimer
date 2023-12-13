@@ -94,7 +94,7 @@ class MyWidget(QWidget):
         self.LCD.setDigitCount=8
         self.LCD.setDecMode=QLCDNumber.Dec
         self.LCD.setSegmentStyle=QLCDNumber.Flat
-        self.LCD.display(time.strftime('%X',time.localtime())) 
+        self.LCD.display(time.strftime('%X',time.localtime())) #(datetime.datetime.today().strftime("%H:%M:%S"))#(time.strftime('%H:%M:%S',time.localtime())) 
 
         self.datelabel=QLabel()
         self.datelabel.setText(str( datetime.date.today()))
@@ -120,7 +120,7 @@ class MyWidget(QWidget):
     #功能：不断刷新时间并显示
     def display(self):
         while True:
-            self.LCD.display(time.strftime('%X',time.localtime()))
+            self.LCD.display(time.strftime('%X',time.localtime())) #(datetime.datetime.today().strftime("%H:%M:%S"))
             qDebug("显示当前时间：")
             qDebug(time.strftime('%X',time.localtime()))
             qDebug(datetime.datetime.today().ctime())
@@ -184,14 +184,15 @@ class MyWidget(QWidget):
                 return False
             data = list()
             for child in root:
+                qDebug("child:"+child[0].text+child[1].text+child[2].text+child[3].text)
                 data1 = list()
                 for son in child:
                     data1.append(son.text)
-                    qDebug("DATA1:")
-                    #qDebug<<data1
+                    qDebug("DATA1:"+son.text)
+                    #qDebug(son.text)
                 data.append(data1)#,end='\n')
-                qDebug("DATA:")
-                #qDebug()<<data   #,end='\n')
+                #qDebug("DATA:")
+                #qDebug(data)   #,end='\n')
             #for combobox_item in data:
             #    #整理好字符串并添加字符串：
             #

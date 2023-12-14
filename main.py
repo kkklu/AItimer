@@ -58,6 +58,7 @@ class MyWidget(QWidget):
         self.resize(400,200)
         #self.windowTitle("zhbs time")
         self.setWindowTitle("zhbs Timer")
+        
 
         #全局窗体
         self.globalWidget=QWidget(self)
@@ -114,7 +115,8 @@ class MyWidget(QWidget):
         self.globalLayout.addLayout(self.h1_layout)
         #self.globalLayout.addLayout(self.h2_layout)
         self.globalLayout.addLayout(self.box_layout)
-
+            
+        
 
         self.show()
         return
@@ -227,6 +229,13 @@ class MyWidget(QWidget):
     #@Slot
     def test_button_clicked(self):
         qDebug("button has clicked")
+        if self.h1_combobox.currentIndex() is not -1:#self.h1_combobox.currentText is not None:
+            qDebug(self.h1_combobox.currentText())
+            qDebug("index: "+self.h1_combobox.currentIndex().__str__())
+        else:
+            #self.dlg=customDialog
+            h1_messagebox=QMessageBox()
+            h1_messagebox.warning(self,"错误","combobox不能为空")
         return
     
 if __name__ == "__main__":

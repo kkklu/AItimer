@@ -22,7 +22,7 @@ from PySide2.QtWidgets import QApplication,QWidget,QPlainTextEdit,QLabel,QLCDNum
 import time,datetime
 import threading
 #import pandas as pd
-from PySide2.QtCore import qDebug
+from PySide2.QtCore import qDebug,Slot
 
 try:
     import xml.etree.cElementTree as ET
@@ -45,8 +45,11 @@ class MyWidget(QWidget):
 
         ReadXml=threading.Thread(target=self.ReadXml,name="read_xml")
         ReadXml.start()
+
+        self.h1_button.clicked.connect(self.test_button_clicked)
         #if self.ReadXml():
         #    print("read xml success")
+
 
     #def readxml():
 
@@ -162,6 +165,7 @@ class MyWidget(QWidget):
     #3、方法3：考虑用signal
     def ReadXml(self):
         while True:
+            #region 另一种read xml方法
             #init xml
             #read xml
             # 读取xml字符串
@@ -174,6 +178,7 @@ class MyWidget(QWidget):
             #    root = ET.fromstring(xml_data)
 
                 # 打开XML文件并解析 第二种打开xml方式
+            #endregion
             try:
                 tree = ET.parse('config.xml')
                 #获取根元素
@@ -184,20 +189,28 @@ class MyWidget(QWidget):
                 return False
             data = list()
             for child in root:
-                qDebug("child:"+child[0].text+child[1].text+child[2].text+child[3].text)
+                qDebug("child: "+child[0].text+" "+child[1].text+" "+child[2].text+" "+child[3].text)
+                self.h1_combobox.addItem(child[0].text+" "+child[1].text+" "+child[2].text+" "+child[3].text) #combobox additem
                 data1 = list()
                 for son in child:
                     data1.append(son.text)
-                    qDebug("DATA1:"+son.text)
-                    #qDebug(son.text)
-                data.append(data1)#,end='\n')
-                #qDebug("DATA:")
-                #qDebug(data)   #,end='\n')
+                    qDebug("DATA1:"+son.text)                    
+                data.append(data1)
+                
+            #region 调试输出
+            qDebug("======================")
+            #for data_temp in data:
+            qDebug(data.__str__())
+            qDebug("======================")
+            #endregion
+
+            #region combobox additem
             #for combobox_item in data:
             #    #整理好字符串并添加字符串：
             #
             #    self.h1_combobox.addItem(combobox_item)   
-
+            #endregion
+            
             #df = pd.DataFrame(data, columns=['start_date', 'end_date', 'time','message'])
             #print(df)
             time.sleep(3) #重新3秒读一次xml文件
@@ -208,6 +221,14 @@ class MyWidget(QWidget):
         mytime=time.localtime
         
         return
+    
+        
+    #加 button click事件
+    #@Slot
+    def test_button_clicked(self):
+        qDebug("button has clicked")
+        return
+    
 if __name__ == "__main__":
 
     #print("This is my AI_VOICE")

@@ -37,13 +37,15 @@ class MyWidget(QWidget):
     def __init__(self):
         QWidget.__init__(self)
         #super().__init__()
+
+        self.data = list()
         self.initUI()
 
         #不断刷新时间并显示
         time_display=threading.Thread(target=self.display,name="time_display")
         time_display.start()
 
-        ReadXml=threading.Thread(target=self.ReadXml,name="read_xml")
+        ReadXml=threading.Thread(target=self.ReadXml,name="read_xml",args=(self.data,)) #[self.data])#(self.data,)) #thread 传递 list参数的两种方法
         ReadXml.start()
 
         self.h1_button.clicked.connect(self.test_button_clicked)
@@ -165,7 +167,7 @@ class MyWidget(QWidget):
     #1、方法1：需要做一个static的变量（list或字典）吗？然后不断地都xml，更新该变量
     #2、方法2 返回一个变量值
     #3、方法3：考虑用signal
-    def ReadXml(self):
+    def ReadXml(self,data):
         while True:
             #region 另一种read xml方法
             #init xml
@@ -189,7 +191,7 @@ class MyWidget(QWidget):
             except IOError:
                 print("打不开xml文件")
                 return False
-            data = list()
+           # data = list()
             for child in root:
                 qDebug("child: "+child[0].text+" "+child[1].text+" "+child[2].text+" "+child[3].text)
                 self.h1_combobox.addItem(child[0].text+" "+child[1].text+" "+child[2].text+" "+child[3].text) #combobox additem
@@ -229,9 +231,10 @@ class MyWidget(QWidget):
     #@Slot
     def test_button_clicked(self):
         qDebug("button has clicked")
-        if self.h1_combobox.currentIndex() is not -1:#self.h1_combobox.currentText is not None:
+        if self.h1_combobox.currentIndex()!=-1: #is not -1:#self.h1_combobox.currentText is not None:
             qDebug(self.h1_combobox.currentText())
             qDebug("index: "+self.h1_combobox.currentIndex().__str__())
+            #用 静态的data 截取时间和提醒文字，还是通着combobox得currentText来提取？好像用data好一点？
         else:
             #self.dlg=customDialog
             h1_messagebox=QMessageBox()

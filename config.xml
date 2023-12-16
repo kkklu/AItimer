@@ -8,9 +8,16 @@
 	</item>
 
 	<item>
-  		<start_date>2023-12-14</start_date>
+  		<start_date>2023-12-16</start_date>
   		<end_date>2024-12-14</end_date>
   		<alarm_time>9:30</alarm_time>
   		<message>请三台并机</message>
+	</item>
+
+	<item>
+  		<start_date>2023-12-16</start_date>
+  		<end_date>2024-12-14</end_date>
+  		<alarm_time>12:00</alarm_time>
+  		<message>请取消三台并机，恢复正常播出</message>
 	</item>
 </config>

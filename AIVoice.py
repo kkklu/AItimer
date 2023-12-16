@@ -16,10 +16,10 @@
 #----------------------------------------
 import pyttsx3
 import time
-
+from PySide2.QtCore import qDebug
 #read_xml:
 #import xml.etree.ElementTree as ET
-import pandas as pd
+#import pandas as pd
 try:
     import xml.etree.cElementTree as ET
 except ImportError:
@@ -27,76 +27,53 @@ except ImportError:
 
 import os
 #--------------------------------------------
-
+...
 #函数名：AI语音播报
-def Artificial_voice_playback(messages):
+def Artificial_voice_playback_1(messages):
 
     # 创建语音引擎
     engine = pyttsx3.init()
 
     # 设置语音速度
-    engine.setProperty('rate', 150)
+    engine.setProperty('rate', 120)
 
+    volume=engine.getProperty('volume')
+    qDebug(f'语音音量：{volume}')
+    
     # 设置语音音量
-    engine.setProperty('volume', 0.7)
+    engine.setProperty('volume', 1)
 
     # 定义要转换为语音的消息
     #messages = ["现在是北京时间", "现在是纽约时间"]
 
     # 循环播放消息
 #    while True:
-        for message in messages:
-            # 将消息转换为语音并播放
-            engine.say(message)
-            engine.runAndWait()
-            # 等待语音播放完毕
-            time.sleep(1)
+    #for message in messages:
+    # 将消息转换为语音并播放
+    engine.say(messages)
+    engine.runAndWait()
+    # 等待语音播放完毕
+    time.sleep(1)
         # 等待60秒后再次循环播放消息
    #    time.sleep(60)
     return
+
 #-------------------------------------------------
 #函数名：闹钟
-def set_alarm(alarm_time, alarm_sound):
+def set_alarm(alarm_time, alarm_sound,messages):
        while True:
            time.sleep(1)
            current_time = time.strftime("%H:%M") #需加上年月日，带上年月日一起判断
            if current_time == alarm_time:
                #os.system("start " + alarm_sound)
-               Artificial_voice_playback(messages)
+               Artificial_voice_playback_1(messages)
                break
 
    #if __name__ == "__main__":
    #    alarm_time = input("请输入闹钟时间，格式为 'HH:MM': ")
    #    alarm_sound = input("请输入闹钟声音文件路径（如：C:/Windows/Media/alarm.wav）: ")
    #    set_alarm(alarm_time, alarm_sound)
-    return
-#----------------------------------------------------
-#函数名：读取xml文件
-#参考网址：https://zhuanlan.zhihu.com/p/582830847
-def read_xml():
-    # 读取xml字符串
-    try:
-        xml_data=open("config.xml").read()
-    except IOError:
-        print("Error:找不到文件打开！")
-    else：
-        root = ET.fromstring(xml_data)
+   # return
 
-        # 打开XML文件并解析 第二种打开xml方式
-        #tree = ET.parse('config.xml')
-
-        #获取根元素
-        root=tree.getroot()
-        data = list()
-        for child in root:
-            data1 = list()
-            for son in child:
-                data1.append(son.text)
-            data.append(data1)
-    ​
-        df = pd.DataFrame(data, columns=['start_date', 'end_date', 'time','message'])
-        print(df)
-    return
-#-------------------------------------------------------
 # if__name__ == "__main__":
 #     pass

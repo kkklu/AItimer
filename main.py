@@ -2,6 +2,7 @@
 # 开发项目：AI人工语音播报提醒
 # 日期：2023.12.2
 # 作者：kkklu
+# email:2039871@qq.com
 
 # 性能描述：
 # 定时播报需要播报的语音，提醒值班员。例如：请报平安、请三台并机、请恢复正常播出....
@@ -33,7 +34,7 @@ except ImportError:
     import xml.etree.ElementTree as ET
 
 import pyttsx3
-
+import AIVoice
 
 class MyWidget(QWidget):
     def __init__(self):
@@ -63,7 +64,7 @@ class MyWidget(QWidget):
     def initUI(self):
         self.resize(400, 200)
         # self.windowTitle("zhbs time")
-        self.setWindowTitle("zhbs Timer")
+        self.setWindowTitle("珠海电台播控提醒")
 
         # 全局窗体
         self.globalWidget = QWidget(self)
@@ -195,9 +196,14 @@ class MyWidget(QWidget):
                 print("打不开xml文件")
                 return False
            # data = list()
+
+            self.h1_combobox.clear() #更新前清除以前的数据
+            data.clear()
+           
             for child in root:
                 qDebug("child: "+child[0].text+" "+child[1].text +
                        " "+child[2].text+" "+child[3].text)
+                #
                 self.h1_combobox.addItem(
                     child[0].text+" "+child[1].text+" "+child[2].text+" "+child[3].text)  # combobox additem
                 data1 = list()
@@ -205,14 +211,14 @@ class MyWidget(QWidget):
                     data1.append(son.text)
                     qDebug("DATA1:"+son.text)
                 data.append(data1)
-
-            # region 调试输出
+            """
+            # region 调试输出,需要调试时才打开
             qDebug("======================")
             # for data_temp in data:
             qDebug(data.__str__())
             qDebug("======================")
             # endregion
-
+            """
             # region combobox additem
             # for combobox_item in data:
             #    #整理好字符串并添加字符串：
@@ -220,17 +226,26 @@ class MyWidget(QWidget):
             #    self.h1_combobox.addItem(combobox_item)
             # endregion
 
-            # df = pd.DataFrame(data, columns=['start_date', 'end_date', 'time','message'])
-            # print(df)
-            time.sleep(3)  # 重新3秒读一次xml文件
-            return True
+            ##在这里加上时间比较函数，函数名改为 readxml and compare time  还是重新做一个合并函数，把thread改为合并函数，合并函数包括readxml 和 compare time，这样程序架构更加清晰
+            ## if compare_time == True: AI发声
+            p=AIVoice.compare_time(self.data)  #闹钟时间
+            if p>=0:
+                Artificial_voice_playback_1(self.data[p][3].__str__())
+                #添加日志信息
+        
 
+
+            time.sleep(1)  # 重新3秒读一次xml文件
+            #return True
+    # region unused
+    """"
     def initTime(self):
         mytime = datetime
         mytime = time.localtime
 
         return
-
+    """
+    # endregion
  
     # 加 button click事件
     # @Slot
@@ -243,17 +258,19 @@ class MyWidget(QWidget):
             # 用 静态的data 截取时间和提醒文字，还是通着combobox得currentText来提取？好像用data好一点？
             qDebug(self.data[self.h1_combobox.currentIndex()].__str__())
             qDebug(self.data[self.h1_combobox.currentIndex()][3].__str__())
+            # region 调试，需要时才打开
             # 拷贝人工语音程序过来
-            #
+            #此语句导致显示卡顿，采用thread会解决
             #Artificial_voice_playback_1(
             #    self.data[self.h1_combobox.currentIndex()][3].__str__())
-            #
+            # endregion
             threading.Thread(target=Artificial_voice_playback_1,name='Artificial_voice_play',args=(self.data[self.h1_combobox.currentIndex()][3].__str__(),)).start()
         else:
             # self.dlg=customDialog
             h1_messagebox = QMessageBox()
             h1_messagebox.warning(self, "错误", "combobox不能为空")
         return
+    
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 	<item>
-  		<start_date>2023-12-04</start_date>
+  		<start_date>2023-12-16</start_date>
   		<end_date>2023-12-31</end_date>
   		<alarm_time>19:30</alarm_time>
   		<message>请报平安</message>
@@ -10,7 +10,7 @@
 	<item>
   		<start_date>2023-12-16</start_date>
   		<end_date>2024-12-14</end_date>
-  		<alarm_time>9:30</alarm_time>
+  		<alarm_time>16:57</alarm_time>
   		<message>请三台并机</message>
 	</item>
 

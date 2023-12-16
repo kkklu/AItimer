@@ -2,6 +2,7 @@
 #开发项目：AI人工语音播报提醒
 #日期：2023.12.2
 #作者：kkklu
+#email:2039871@qq.com
 
 #性能描述：
 #定时播报需要播报的语音，提醒值班员。例如：请报平安、请三台并机、请恢复正常播出....
@@ -15,7 +16,7 @@
 
 #----------------------------------------
 import pyttsx3
-import time
+import time,datetime
 from PySide2.QtCore import qDebug
 #read_xml:
 #import xml.etree.ElementTree as ET
@@ -68,6 +69,39 @@ def set_alarm(alarm_time, alarm_sound,messages):
                #os.system("start " + alarm_sound)
                Artificial_voice_playback_1(messages)
                break
+#函数名：闹钟
+def compare_time(data):
+    data_tmp=list()
+    data_tmp=data
+    #while True:
+    time.sleep(1)
+    current_date =datetime.datetime.strptime(datetime.datetime.today().strftime("%Y-%m-%d"),"%Y-%m-%d") #time.strftime("%H:%M") #需加上年月日，带上年月日一起判断
+    current_time =datetime.datetime.today().strptime(datetime.datetime.today().strftime("%H:%M"),"%H:%M")#time.strftime("%Y/%m/%d")
+        
+    start_date=datetime.datetime.strptime(data_tmp[0][0],"%Y-%m-%d") #time.time()
+    end_date=datetime.datetime.strptime(data_tmp[0][1],"%Y-%m-%d")
+    alarm_time=datetime.datetime.strptime(data_tmp[0][2],"%H:%M")  #应该要带%S，不然会播报60次或者一分钟
+        # region debug
+        #qDebug(datetime.datetime.strftime("%Y-%m-%d",current_date)) #要不要加"%Y/%m/%d"？？
+        # endregion
+        
+    for i in range(0,len(data_tmp),1):
+        start_date=datetime.datetime.strptime(data_tmp[i][0],"%Y-%m-%d") #xml文件的开始日期
+        end_date=datetime.datetime.strptime(data_tmp[i][1],"%Y-%m-%d")   #xml文件的结束日期
+        alarm_time=datetime.datetime.strptime(data_tmp[i][2],"%H:%M")   #xml文件的闹钟时间
+
+        if current_date >= start_date and current_date <= end_date:
+            qDebug("当前日期在start date 和 end date之间")
+            if current_time == alarm_time:
+                qDebug("当前时间处于闹钟时间")
+                #Artificial_voice_playback_1(data[i][3].__str__())
+                return i
+    return -1
+               #Artificial_voice_playback_1(data[i][3].__str__())
+               #break
+
+       #if compare  return True else return false
+
 
    #if __name__ == "__main__":
    #    alarm_time = input("请输入闹钟时间，格式为 'HH:MM': ")

@@ -64,7 +64,7 @@ def Artificial_voice_playback_1(messages):
 def set_alarm(alarm_time, alarm_sound,messages):
        while True:
            time.sleep(1)
-           current_time = time.strftime("%H:%M") #需加上年月日，带上年月日一起判断
+           current_time = time.strftime("%H:%M:%S") #需加上年月日，带上年月日一起判断
            if current_time == alarm_time:
                #os.system("start " + alarm_sound)
                Artificial_voice_playback_1(messages)
@@ -76,11 +76,11 @@ def compare_time(data):
     #while True:
     time.sleep(1)
     current_date =datetime.datetime.strptime(datetime.datetime.today().strftime("%Y-%m-%d"),"%Y-%m-%d") #time.strftime("%H:%M") #需加上年月日，带上年月日一起判断
-    current_time =datetime.datetime.today().strptime(datetime.datetime.today().strftime("%H:%M"),"%H:%M")#time.strftime("%Y/%m/%d")
+    current_time =datetime.datetime.today().strptime(datetime.datetime.today().strftime("%H:%M:%S"),"%H:%M:%S")#time.strftime("%Y/%m/%d")
         
     start_date=datetime.datetime.strptime(data_tmp[0][0],"%Y-%m-%d") #time.time()
     end_date=datetime.datetime.strptime(data_tmp[0][1],"%Y-%m-%d")
-    alarm_time=datetime.datetime.strptime(data_tmp[0][2],"%H:%M")  #应该要带%S，不然会播报60次或者一分钟
+    alarm_time=datetime.datetime.strptime(data_tmp[0][2],"%H:%M:%S")  #应该要带%S，不然会播报60次或者一分钟
         # region debug
         #qDebug(datetime.datetime.strftime("%Y-%m-%d",current_date)) #要不要加"%Y/%m/%d"？？
         # endregion
@@ -88,11 +88,11 @@ def compare_time(data):
     for i in range(0,len(data_tmp),1):
         start_date=datetime.datetime.strptime(data_tmp[i][0],"%Y-%m-%d") #xml文件的开始日期
         end_date=datetime.datetime.strptime(data_tmp[i][1],"%Y-%m-%d")   #xml文件的结束日期
-        alarm_time=datetime.datetime.strptime(data_tmp[i][2],"%H:%M")   #xml文件的闹钟时间
+        alarm_time=datetime.datetime.strptime(data_tmp[i][2],"%H:%M:%S")   #xml文件的闹钟时间
 
         if current_date >= start_date and current_date <= end_date:
             qDebug("当前日期在start date 和 end date之间")
-            if current_time == alarm_time:
+            if current_time == alarm_time: #
                 qDebug("当前时间处于闹钟时间")
                 #Artificial_voice_playback_1(data[i][3].__str__())
                 return i

@@ -119,8 +119,8 @@ class MyWidget(QWidget):
         # self.setLayout(self.box_layout) #设置窗体布局
 
         self.globalLayout.addLayout(self.h1_layout)
-        # self.globalLayout.addLayout(self.h2_layout)
-        self.globalLayout.addLayout(self.box_layout)
+        self.globalLayout.addLayout(self.h2_layout)
+        #self.globalLayout.addLayout(self.box_layout)
 
         self.show()
         return
@@ -201,8 +201,8 @@ class MyWidget(QWidget):
             data.clear()
            
             for child in root:
-                qDebug("child: "+child[0].text+" "+child[1].text +
-                       " "+child[2].text+" "+child[3].text)
+                #qDebug("child: "+child[0].text+" "+child[1].text +
+                #       " "+child[2].text+" "+child[3].text)
                 #
                 self.h1_combobox.addItem(
                     child[0].text+" "+child[1].text+" "+child[2].text+" "+child[3].text)  # combobox additem
@@ -231,6 +231,9 @@ class MyWidget(QWidget):
             p=AIVoice.compare_time(self.data)  #闹钟时间
             if p>=0:
                 Artificial_voice_playback_1(self.data[p][3].__str__())
+                self.h2_textedit.appendPlainText(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")+"成功播放："+self.data[p][3].__str__())
+                p=-1
+                break
                 #添加日志信息
         
 

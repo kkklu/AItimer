@@ -18,7 +18,7 @@
 
 # This Python file uses the following encoding: utf-8
 import sys
-from PySide2.QtWidgets import QApplication, QWidget, QPlainTextEdit, QLabel, QLCDNumber, QVBoxLayout, QHBoxLayout, QGridLayout, QComboBox, QMessageBox, QPushButton
+from PySide2.QtWidgets import QApplication, QWidget, QPlainTextEdit, QLabel, QLCDNumber, QVBoxLayout, QHBoxLayout, QGridLayout, QComboBox, QMessageBox, QPushButton,QStatusBar
 # from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel,QLCDNumber,QVBoxLayout,QMessageBox,QPushButton
 import time
 import datetime
@@ -72,6 +72,7 @@ class MyWidget(QWidget):
         # 分窗体
         self.h1_layout = QHBoxLayout()
         self.h2_layout = QVBoxLayout()
+        self.h3_layout=QHBoxLayout()
         self.g_layout = QGridLayout()
 
         # 1号分窗体
@@ -114,6 +115,11 @@ class MyWidget(QWidget):
         self.box_layout.addWidget(self.LCD)
         self.box_layout.addWidget(self.datelabel)
 
+        #4号窗体
+        self.h3_statusbar= QStatusBar()
+        #self.h3_statusbar.showMessage("成功") #.setWindowIconText("成功")
+        self.h3_layout.addWidget(self.h3_statusbar)
+
         # self.box_layout.setAlignment(widget.width,widget.)
         # self.box_layout.setAlignment()
         # self.setLayout(self.box_layout) #设置窗体布局
@@ -121,6 +127,7 @@ class MyWidget(QWidget):
         self.globalLayout.addLayout(self.h1_layout)
         self.globalLayout.addLayout(self.h2_layout)
         #self.globalLayout.addLayout(self.box_layout)
+        self.globalLayout.addLayout(self.h3_layout)
 
         self.show()
         return
@@ -131,6 +138,7 @@ class MyWidget(QWidget):
         while True:
             # (datetime.datetime.today().strftime("%H:%M:%S"))
             self.LCD.display(time.strftime('%X', time.localtime()))
+            self.h3_statusbar.showMessage(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"))
             #qDebug("显示当前时间：")
             #qDebug(time.strftime('%X', time.localtime()))
             #qDebug(datetime.datetime.today().ctime())

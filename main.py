@@ -131,10 +131,22 @@ class MyWidget(QWidget):
         while True:
             # (datetime.datetime.today().strftime("%H:%M:%S"))
             self.LCD.display(time.strftime('%X', time.localtime()))
-            qDebug("显示当前时间：")
-            qDebug(time.strftime('%X', time.localtime()))
-            qDebug(datetime.datetime.today().ctime())
-            qDebug(datetime.datetime.today().strftime("%Y/%m/%d/%H/%M/%S"))
+            #qDebug("显示当前时间：")
+            #qDebug(time.strftime('%X', time.localtime()))
+            #qDebug(datetime.datetime.today().ctime())
+            #qDebug(datetime.datetime.today().strftime("%Y/%m/%d/%H/%M/%S"))
+
+            ##在这里加上时间比较函数，函数名改为 readxml and compare time  还是重新做一个合并函数，把thread改为合并函数，合并函数包括readxml 和 compare time，这样程序架构更加清晰
+            ## if compare_time == True: AI发声
+            p=AIVoice.compare_time(self.data)  #闹钟时间
+            if p>=0:
+                qDebug(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")+"成功播放："+self.data[p][3].__str__())
+                Artificial_voice_playback_1(self.data[p][3].__str__())
+                self.h2_textedit.appendPlainText(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")+"成功播放："+self.data[p][3].__str__())
+                #p=-1
+                #break
+                #添加日志信息
+        
             time.sleep(1)
         # return
     # region date strtime格式
@@ -172,6 +184,7 @@ class MyWidget(QWidget):
     # 3、方法3：考虑用signal
 
     def ReadXml(self, data):
+        
         while True:
             # region 另一种read xml方法
             # init xml
@@ -192,13 +205,16 @@ class MyWidget(QWidget):
                 # 获取根元素
                 root = tree.getroot()
                 qDebug("打开config.xml成功")
+                self.h1_combobox.clear() #更新前清除以前的数据
+                data.clear()
+                #data1.clear()
             except IOError:
-                print("打不开xml文件")
-                return False
+                qDebug("打开config.xml失败")
+                break
+                #return False
            # data = list()
 
-            self.h1_combobox.clear() #更新前清除以前的数据
-            data.clear()
+
            
             for child in root:
                 #qDebug("child: "+child[0].text+" "+child[1].text +
@@ -207,6 +223,7 @@ class MyWidget(QWidget):
                 self.h1_combobox.addItem(
                     child[0].text+" "+child[1].text+" "+child[2].text+" "+child[3].text)  # combobox additem
                 data1 = list()
+                data1.clear()
                 for son in child:
                     data1.append(son.text)
                     qDebug("DATA1:"+son.text)
@@ -226,19 +243,10 @@ class MyWidget(QWidget):
             #    self.h1_combobox.addItem(combobox_item)
             # endregion
 
-            ##在这里加上时间比较函数，函数名改为 readxml and compare time  还是重新做一个合并函数，把thread改为合并函数，合并函数包括readxml 和 compare time，这样程序架构更加清晰
-            ## if compare_time == True: AI发声
-            p=AIVoice.compare_time(self.data)  #闹钟时间
-            if p>=0:
-                Artificial_voice_playback_1(self.data[p][3].__str__())
-                self.h2_textedit.appendPlainText(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")+"成功播放："+self.data[p][3].__str__())
-                p=-1
-                break
-                #添加日志信息
-        
 
 
-            time.sleep(1)  # 重新3秒读一次xml文件
+
+            time.sleep(30)  # 重新3秒读一次xml文件
             #return True
     # region unused
     """"

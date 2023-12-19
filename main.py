@@ -218,6 +218,7 @@ class MyWidget(QWidget):
                 #data1.clear()
             except IOError:
                 qDebug("打开config.xml失败")
+                qDebug(ET.ParseError().__str__)
                 break
                 #return False
            # data = list()

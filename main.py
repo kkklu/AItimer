@@ -25,6 +25,9 @@ import datetime
 import threading
 # import pandas as pd
 from PySide2.QtCore import qDebug, Slot
+from PySide2.QtGui import QIcon
+import os
+
 
 from AIVoice import Artificial_voice_playback_1
 
@@ -38,8 +41,8 @@ import AIVoice
 
 class MyWidget(QWidget):
     def __init__(self):
-        QWidget.__init__(self)
-        # super().__init__()
+        #QWidget.__init__(self)
+        super().__init__()
 
         self.data = list()
         self.initUI()
@@ -62,9 +65,13 @@ class MyWidget(QWidget):
     # 功能：初始化UI
 
     def initUI(self):
-        self.resize(400, 200)
-        # self.windowTitle("zhbs time")
-        self.setWindowTitle("珠海电台播控提醒")
+        self.setVisible(True) 
+        #self.setFixedWidth()
+        self.resize(520, 300)
+        
+        self.setWindowTitle("珠海电台播控语音提醒")
+        #self.setWindowIconText("珠海zhbs")
+        self.setWindowIcon(QIcon(':\timer.pnp')) #这个不起作用，待解决
 
         # 全局窗体
         self.globalWidget = QWidget(self)
@@ -77,19 +84,28 @@ class MyWidget(QWidget):
 
         # 1号分窗体
         self.h1_label = QLabel()
+        #self.h1_label.resize(40,30)
         self.h1_label.setText("任务：")
 
         self.h1_combobox = QComboBox(self)
-        # self.h1_combobox.resize(450,50)
+        qDebug("ComboBox width:"+self.h1_combobox.width().__str__())
+        qDebug("ComboBox height:"+self.h1_combobox.height().__str__())
+        #self.h1_combobox.resize(200,30) #这个语句不起作用，why？
+        self.h1_combobox.setFixedSize(370,20)
+
+        
 
         self.h1_button = QPushButton(self)
+        #self.h1_button.resize(40,30)
         self.h1_button.setText("测试")
-
+        
+        #self.h1_layout.addStretch(2)
         self.h1_layout.addWidget(self.h1_label)
-        self.h1_layout.addStretch(0)
+        self.h1_layout.addStretch(2)
         self.h1_layout.addWidget(self.h1_combobox)
-        self.h1_layout.addStretch(0)
+        self.h1_layout.addStretch(2)
         self.h1_layout.addWidget(self.h1_button)
+        #self.h1_layout.addStretch(2)
 
         # 2号分窗体
         self.h2_label = QLabel()
@@ -219,6 +235,7 @@ class MyWidget(QWidget):
             except IOError:
                 qDebug("打开config.xml失败")
                 qDebug(ET.ParseError().__str__)
+                #QMessageBox.about(self.aboutButton,'About PySide','PySide6')
                 break
                 #return False
            # data = list()
@@ -299,6 +316,7 @@ if __name__ == "__main__":
     app = QApplication([])
     # ...this is my program
     widget = MyWidget()
+    widget.show()
     # time_display=threading.Thread(target=widget.display,name="time_display")
     # time_display.start()
     # ......

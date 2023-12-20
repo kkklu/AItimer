@@ -71,7 +71,7 @@ class MyWidget(QWidget):
         
         self.setWindowTitle("珠海电台播控语音提醒")
         #self.setWindowIconText("珠海zhbs")
-        self.setWindowIcon(QIcon(':\timer.pnp')) #这个不起作用，待解决
+        self.setWindowIcon(QIcon("timer.png")) #这个不起作用，待解决
 
         # 全局窗体
         self.globalWidget = QWidget(self)
@@ -316,7 +316,7 @@ if __name__ == "__main__":
     app = QApplication([])
     # ...this is my program
     widget = MyWidget()
-    widget.show()
+    #widget.show() #在self.init有self.show(),在这里可加可不加
     # time_display=threading.Thread(target=widget.display,name="time_display")
     # time_display.start()
     # ......

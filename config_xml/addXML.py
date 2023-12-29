@@ -2,8 +2,13 @@
 import sys
 from PySide2.QtWidgets import QApplication, QWidget,QMessageBox,QDialog,QPushButton
 from PySide2.QtUiTools import QUiLoader
-from PySide2.QtCore import QFile,QIODevice
+from PySide2.QtCore import QFile,QIODevice,qDebug
 import add_Xml_ui
+
+try:
+    import xml.etree.cElementTree as ET
+except ImportError:
+    import xml.etree.ElementTree as ET
 
 class addXML(QDialog,add_Xml_ui.Ui_Dialog):  #有空对比QWidget 和self.super.__init__()语句，会不会有大的差异，dialog没有super.init
     def __init__(self):
@@ -30,7 +35,27 @@ class addXML(QDialog,add_Xml_ui.Ui_Dialog):  #有空对比QWidget 和self.super.
         """
         #endregion
     
-    def savexml():
+    def savexml(self):
+       
+        # region 打开XML文件
+        data=list()
+        try:
+            tree = ET.parse('config.xml')
+            # 获取根元素
+            root = tree.getroot()
+            qDebug("打开config.xml成功")
+            #self.h1_combobox.clear() #更新前清除以前的数据
+            data.clear()
+            #data1.clear()
+        except IOError:
+            qDebug("打开config.xml失败")
+            qDebug(ET.ParseError().__str__)
+            QMessageBox.about(self.aboutButton,'错误','打开config.xml失败')
+            #return False
+        # endregion
+        pass
+        #self.alarm_str_lineEdit
+
         return
 
 if __name__ == "__main__":

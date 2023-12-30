@@ -25,8 +25,9 @@ import datetime
 import threading
 # import pandas as pd
 from PySide2.QtCore import qDebug, Slot
-from PySide2.QtGui import QIcon
+from PySide2.QtGui import QIcon,QCloseEvent
 import os
+
 
 
 from AIVoice import Artificial_voice_playback_1
@@ -47,14 +48,16 @@ class MyWidget(QWidget):
         self.data = list()
         self.initUI()
 
-        # 不断刷新时间并显示
+        # 不断刷新时间并显示 #mainthread结束，子线程也立马结束，那么需设置deamon=True
         time_display = threading.Thread(
-            target=self.display, name="time_display")
+            target=self.display, name="time_display",daemon=True)
         time_display.start()
+        
 
         ReadXml = threading.Thread(target=self.ReadXml, name="read_xml", args=(
-            self.data,))  # [self.data])#(self.data,)) #thread 传递 list参数的两种方法
+            self.data,),daemon=True)  # [self.data])#(self.data,)) #thread 传递 list参数的两种方法
         ReadXml.start()
+        
 
         self.h1_button.clicked.connect(self.test_button_clicked)
         # if self.ReadXml():
@@ -307,6 +310,10 @@ class MyWidget(QWidget):
             h1_messagebox = QMessageBox()
             h1_messagebox.warning(self, "错误", "combobox不能为空")
         return
+    def closeEvent(self, event: QCloseEvent) -> None:
+        #sys.exit(app.exec_())
+        
+        return super().closeEvent(event)
     
 
 

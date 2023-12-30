@@ -1,0 +1,73 @@
+<?xml version="1.0" ?>
+<config>
+	
+	
+	<item>
+		
+  		
+		<start_date>2023-12-16</start_date>
+		
+  		
+		<end_date>2023-12-31</end_date>
+		
+  		
+		<alarm_time>11:5:55</alarm_time>
+		
+  		
+		<message>请报平安</message>
+		
+	
+	</item>
+	
+
+	
+	<item>
+		
+  		
+		<start_date>2023-12-16</start_date>
+		
+  		
+		<end_date>2024-12-14</end_date>
+		
+  		
+		<alarm_time>11:8:39</alarm_time>
+		
+  		
+		<message>请三台并机</message>
+		
+	
+	</item>
+	
+
+	
+	<item>
+		
+  		
+		<start_date>2023-12-16</start_date>
+		
+  		
+		<end_date>2024-12-14</end_date>
+		
+  		
+		<alarm_time>10:19:00</alarm_time>
+		
+  		
+		<message>请取消三台并机，恢复正常播出</message>
+		
+	
+	</item>
+	
+
+	<item>
+		<start_date>2023-12-31</start_date>
+		<end_date>2023-12-31</end_date>
+		<alarm_time>12:00:00</alarm_time>
+		<message>eewewr</message>
+	</item>
+	<item>
+		<start_date>2024-01-01</start_date>
+		<end_date>2024-01-01</end_date>
+		<alarm_time>12:00:00</alarm_time>
+		<message>dfsda</message>
+	</item>
+</config>

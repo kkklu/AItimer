@@ -34,6 +34,7 @@ class addXML(QDialog,add_Xml_ui.Ui_Dialog):  #有空对比QWidget 和self.super.
             
         pass  # call __init__(self) of the custom base class here
     
+    #load ui :https://cloud.tencent.com/developer/article/2334289
     def initUI(self):
         self.setupUi(self)
         #region 第二种load ui文件的方法，打开UI文件，并load

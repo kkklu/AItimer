@@ -77,25 +77,37 @@ def compare_time(data):
     #time.sleep(1)
     current_date =datetime.datetime.strptime(datetime.datetime.today().strftime("%Y-%m-%d"),"%Y-%m-%d") #time.strftime("%H:%M") #需加上年月日，带上年月日一起判断
     current_time =datetime.datetime.today().strptime(datetime.datetime.today().strftime("%H:%M:%S"),"%H:%M:%S")#time.strftime("%Y/%m/%d")
-        
+    current_week=datetime.datetime.today().weekday() #datetime.datetime.strptime(datetime.datetime.today().strftime('%w'),'%w')
+    qDebug(str(current_week))
+
     start_date=datetime.datetime.strptime(data_tmp[0][0],"%Y-%m-%d") #time.time()
     end_date=datetime.datetime.strptime(data_tmp[0][1],"%Y-%m-%d")
     alarm_time=datetime.datetime.strptime(data_tmp[0][2],"%H:%M:%S")  #应该要带%S，不然会播报60次或者一分钟
+    loop=data_tmp[0][3]
+
         # region debug
-        #qDebug(datetime.datetime.strftime("%Y-%m-%d",current_date)) #要不要加"%Y/%m/%d"？？
+    #qDebug(datetime.datetime.strftime("%Y-%m-%d",current_date)) #要不要加"%Y/%m/%d"？？
         # endregion
         
     for i in range(0,len(data_tmp),1):
         start_date=datetime.datetime.strptime(data_tmp[i][0],"%Y-%m-%d") #xml文件的开始日期
         end_date=datetime.datetime.strptime(data_tmp[i][1],"%Y-%m-%d")   #xml文件的结束日期
         alarm_time=datetime.datetime.strptime(data_tmp[i][2],"%H:%M:%S")   #xml文件的闹钟时间
+        loop=data_tmp[i][3]
 
         if current_date >= start_date and current_date <= end_date:
             #qDebug("当前日期在start date 和 end date之间")
-            if current_time == alarm_time: #
-                qDebug("当前时间处于闹钟时间")
-                #Artificial_voice_playback_1(data[i][3].__str__())
-                return i
+            if current_time == alarm_time: 
+                if loop=='每天':#
+                    qDebug("当前时间处于闹钟时间")
+                    #Artificial_voice_playback_1(data[i][3].__str__())
+                    return i
+                elif loop=='每周六':
+                    if current_week==5:
+                        pass
+                        return i
+                elif loop=='每周日':
+                    pass
     return -1
                #Artificial_voice_playback_1(data[i][3].__str__())
                #break

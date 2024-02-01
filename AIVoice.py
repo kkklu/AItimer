@@ -36,7 +36,7 @@ def Artificial_voice_playback_1(messages):
     engine = pyttsx3.init()
 
     # 设置语音速度
-    engine.setProperty('rate', 120)
+    engine.setProperty('rate', 150)
 
     volume=engine.getProperty('volume')
     qDebug(f'语音音量：{volume}')
@@ -107,7 +107,18 @@ def compare_time(data):
                         pass
                         return i
                 elif loop=='每周日':
-                    pass
+                    if current_week==6:
+                        pass
+                        return i
+                elif loop=='周一至周五':
+                    if current_week !=5 and current_week!=6:
+                        pass
+                        return i
+                elif loop=='每周六日':
+                    if current_week ==5 or current_week == 6:
+                        pass
+                        return i
+                    
     return -1
                #Artificial_voice_playback_1(data[i][3].__str__())
                #break

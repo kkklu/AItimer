@@ -93,8 +93,8 @@ def compare_time(data):
         start_date=datetime.datetime.strptime(data_tmp[i][0],"%Y-%m-%d") #xml文件的开始日期
         end_date=datetime.datetime.strptime(data_tmp[i][1],"%Y-%m-%d")   #xml文件的结束日期
         alarm_time=datetime.datetime.strptime(data_tmp[i][2],"%H:%M:%S")   #xml文件的闹钟时间
-        loop=data_tmp[i][3]
-
+        loop=data_tmp[i][4]
+        #qDebug(loop)
         if current_date >= start_date and current_date <= end_date:
             #qDebug("当前日期在start date 和 end date之间")
             if current_time == alarm_time: 

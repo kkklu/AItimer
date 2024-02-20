@@ -27,32 +27,37 @@ except ImportError:
     import xml.etree.ElementTree as ET
 
 import os
+import logging
 #--------------------------------------------
 ...
 #函数名：AI语音播报
 def Artificial_voice_playback_1(messages):
+    try:
+        logging.debug("创建语音引擎")
+        # 创建语音引擎
+        engine = pyttsx3.init()
 
-    # 创建语音引擎
-    engine = pyttsx3.init()
+        # 设置语音速度
+        engine.setProperty('rate', 150)
 
-    # 设置语音速度
-    engine.setProperty('rate', 150)
-
-    volume=engine.getProperty('volume')
-    qDebug(f'语音音量：{volume}')
+        volume=engine.getProperty('volume')
+        qDebug(f'语音音量：{volume}')
     
-    # 设置语音音量
-    engine.setProperty('volume', 1)
+        # 设置语音音量
+        engine.setProperty('volume', 1)
 
-    # 定义要转换为语音的消息
-    #messages = ["现在是北京时间", "现在是纽约时间"]
+        # 定义要转换为语音的消息
+        #messages = ["现在是北京时间", "现在是纽约时间"]
 
-    # 循环播放消息
-#    while True:
-    #for message in messages:
-    # 将消息转换为语音并播放
-    engine.say(messages)
-    engine.runAndWait()
+        # 循环播放消息
+        #    while True:
+        #for message in messages:
+    
+        # 将消息转换为语音并播放
+        engine.say(messages)
+        engine.runAndWait()
+    except IOError:
+        logging.error(IOError)
     # 等待语音播放完毕
     time.sleep(1)
         # 等待60秒后再次循环播放消息

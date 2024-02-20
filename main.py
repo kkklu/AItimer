@@ -28,7 +28,7 @@ import threading
 from PySide2.QtCore import qDebug, Slot
 from PySide2.QtGui import QIcon,QCloseEvent
 import os
-
+import logging
 
 
 from AIVoice import Artificial_voice_playback_1
@@ -48,6 +48,7 @@ class MyWidget(QWidget):
 
         self.data = list()
         self.initUI()
+        self.initlog()
 
         # 不断刷新时间并显示 #mainthread结束，子线程也立马结束，那么需设置deamon=True
         time_display = threading.Thread(
@@ -152,6 +153,28 @@ class MyWidget(QWidget):
         self.show()
         return
 
+    def initlog(self):
+        #默认的warning级别，只输出warning以上的
+        #使用basicConfig()来指定日志级别和相关信息
+
+        logging.basicConfig(level=logging.DEBUG #设置日志输出格式
+                    ,filename="history.log" #log日志输出的文件位置和文件名
+                    ,filemode="w" #文件的写入格式，w为重新写入文件，默认是追加
+                    ,format="%(asctime)s - %(name)s - %(levelname)-9s - %(filename)-8s : %(lineno)s line - %(message)s" #日志输出的格式
+                    # -8表示占位符，让输出左对齐，输出长度都为8位
+                    ,datefmt="%Y-%m-%d %H:%M:%S" #时间输出的格式
+                    )
+
+        logging.debug("This is  DEBUG !!")
+        logging.info("This is  INFO !!")
+        logging.warning("This is  WARNING !!")
+        logging.error("This is  ERROR !!")
+        logging.critical("This is  CRITICAL !!")
+        return
+
+#在实际项目中，捕获异常的时候，如果使用logging.error(e)，只提示指定的logging信息，不会出现
+#为什么会错的信息，所以要使用logging.exception(e)去记录。
+
     # 函数名：display
     # 功能：不断刷新时间并显示
     def display(self):
@@ -168,12 +191,14 @@ class MyWidget(QWidget):
             ## if compare_time == True: AI发声
             p=AIVoice.compare_time(self.data)  #闹钟时间
             if p>=0:
+                logging.debug("当前时间处于闹钟时间")
                 qDebug(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")+"成功播放："+self.data[p][3].__str__())
                 Artificial_voice_playback_1(self.data[p][3].__str__())
                 self.h2_textedit.appendPlainText(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")+"成功播放："+self.data[p][3].__str__())
                 #p=-1
                 #break
                 #添加日志信息
+                logging.debug(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")+"成功播放："+self.data[p][3].__str__())
         
             time.sleep(1)
         # return
@@ -233,6 +258,7 @@ class MyWidget(QWidget):
                 # 获取根元素
                 root = tree.getroot()
                 qDebug("打开config.xml成功")
+                logging.debug('打开config.xml成功')
                 self.h1_combobox.clear() #更新前清除以前的数据
                 data.clear()
                 #data1.clear()
@@ -240,6 +266,7 @@ class MyWidget(QWidget):
                 qDebug("打开config.xml失败")
                 qDebug(ET.ParseError().__str__)
                 #QMessageBox.about(self.aboutButton,'About PySide','PySide6')
+                logging.error(IOError)
                 break
                 #return False
            # data = list()

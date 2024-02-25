@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 	<item>
-  		<start_date>2023-12-16</start_date>
-  		<end_date>2025-12-31</end_date>
+  		<start_date>2024-02-16</start_date>
+  		<end_date>2025-12-30</end_date>
   		<alarm_time>07:00:26</alarm_time>
   		<message>请确认九一五、八七五 八选一是否恢复正常播出</message>
 		<loop>每天</loop>
@@ -11,7 +11,7 @@
 	<item>
   		<start_date>2023-12-16</start_date>
   		<end_date>2025-12-31</end_date>
-  		<alarm_time>22:55:36</alarm_time>
+  		<alarm_time>22:00:26</alarm_time>
   		<message>请确认 八七五 八选一是否切换至AI播出站播出</message>
 		<loop>每天</loop>
 	</item>
@@ -34,8 +34,8 @@
 	
 	<item>
   		<start_date>2024-02-09</start_date>
-  		<end_date>2024-02-09</end_date>
-  		<alarm_time>19:59:00</alarm_time>
+  		<end_date>2024-02-28</end_date>
+  		<alarm_time>11:59:00</alarm_time>
   		<message>请准备三台并机播出春晚</message>
 		<loop>每天</loop>
 	</item>

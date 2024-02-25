@@ -121,21 +121,22 @@ class MyWidget(QWidget):
         self.h2_layout.addWidget(self.h2_textedit)
 
         # 3号分窗体
-        self.LCD = QLCDNumber()  # 初始化LCD
-        self.LCD.setDigitCount = 8
-        self.LCD.setDecMode = QLCDNumber.Dec
-        self.LCD.setSegmentStyle = QLCDNumber.Flat
-        # (datetime.datetime.today().strftime("%H:%M:%S"))#(time.strftime('%H:%M:%S',time.localtime()))
-        self.LCD.display(time.strftime('%X', time.localtime()))
+        #
+        #self.LCD = QLCDNumber()  # 初始化LCD
+        #self.LCD.setDigitCount = 8
+        #self.LCD.setDecMode = QLCDNumber.Dec
+        #self.LCD.setSegmentStyle = QLCDNumber.Flat
+        ## (datetime.datetime.today().strftime("%H:%M:%S"))#(time.strftime('%H:%M:%S',time.localtime()))
+        #self.LCD.display(time.strftime('%X', time.localtime()))
 
-        self.datelabel = QLabel()
-        self.datelabel.setText(str(datetime.date.today()))
-        # self.datelabel.move(100,0)
+        #self.datelabel = QLabel()
+        #self.datelabel.setText(str(datetime.date.today()))
+        ## self.datelabel.move(100,0)
 
-        self.box_layout = QVBoxLayout()
-        self.box_layout.addWidget(self.LCD)
-        self.box_layout.addWidget(self.datelabel)
-
+        #self.box_layout = QVBoxLayout()
+        #self.box_layout.addWidget(self.LCD)
+        #self.box_layout.addWidget(self.datelabel)
+        #...
         #4号窗体
         self.h3_statusbar= QStatusBar()
         #self.h3_statusbar.showMessage("成功") #.setWindowIconText("成功")
@@ -180,8 +181,14 @@ class MyWidget(QWidget):
     def display(self):
         while True:
             # (datetime.datetime.today().strftime("%H:%M:%S"))
-            self.LCD.display(time.strftime('%X', time.localtime()))
-            self.h3_statusbar.showMessage(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"))
+            try:
+                #self.LCD.display(time.strftime('%X', time.localtime()))
+                self.h3_statusbar.showMessage(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"))
+                #logging.debug()
+            except IOError:
+                pass
+                logging.error(IOError)
+                break
             #qDebug("显示当前时间：")
             #qDebug(time.strftime('%X', time.localtime()))
             #qDebug(datetime.datetime.today().ctime())
@@ -257,10 +264,11 @@ class MyWidget(QWidget):
                 tree = ET.parse('config.xml')
                 # 获取根元素
                 root = tree.getroot()
-                qDebug("打开config.xml成功")
-                logging.debug('打开config.xml成功')
+                #qDebug("打开config.xml成功")
+                
                 self.h1_combobox.clear() #更新前清除以前的数据
                 data.clear()
+                logging.debug('打开config.xml成功')
                 #data1.clear()
             except IOError:
                 qDebug("打开config.xml失败")
